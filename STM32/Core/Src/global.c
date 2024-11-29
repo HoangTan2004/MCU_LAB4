@@ -21,4 +21,10 @@ int BLINKY_LED_STATUS = INIT;
 
 int led_buffer[4] = {0, 0, 0, 0};
 int STATUS_7SEG = INIT;
-int TIME_7SEG = 250; // The time of change to other 7-segment LED is 0.25 second
+
+int count_7SEG = 25;
+
+int TIME_CYCLE = 10;
+
+int count_blink = 25;
+int count_auto = 99;

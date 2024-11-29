@@ -92,11 +92,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
   SCH_Init();
-//  System_Initialization();
   /* USER CODE END 2 */
-  SCH_Add_Task(timerRun, 1, 1);
-  SCH_Add_Task(getButtonValue, 2, 1);
-  SCH_Add_Task(fsm_setting, 3, 1);
+  SCH_Add_Task(fsm_setting, 0, 1);
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
@@ -242,6 +239,7 @@ static void MX_GPIO_Init(void)
 /* USER CODE BEGIN 4 */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) {
 	SCH_Update();
+	getButtonValue();
 }
 /* USER CODE END 4 */
 

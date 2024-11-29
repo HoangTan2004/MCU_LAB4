@@ -25,26 +25,35 @@ void blinkyLed(int LED) {
 		if (LED == RED) BLINKY_LED_STATUS = LED;
 		if (LED == GREEN) BLINKY_LED_STATUS = GREEN;
 		if (LED == YELLOW) BLINKY_LED_STATUS = YELLOW;
-		setTimer3(250); // 2Hz
+		count_blink = 24;
 		break;
 	case RED:
-		if (timer3_flag == 1) {
-			setTimer3(250);
+		if (count_blink <= 0) {
+			count_blink = 24;
 			HAL_GPIO_TogglePin(GPIOA, LED_RED_1_Pin | LED_RED_2_Pin);
+		}
+		else {
+			count_blink--;
 		}
 		break;
 
 	case YELLOW:
-		if (timer3_flag == 1) {
-			setTimer3(250);
-			HAL_GPIO_TogglePin(GPIOA, LED_YELLOW_1_Pin| LED_YELLOW_2_Pin);
+		if (count_blink <= 0) {
+			count_blink = 24;
+			HAL_GPIO_TogglePin(GPIOA, LED_YELLOW_1_Pin | LED_YELLOW_2_Pin);
+		}
+		else {
+			count_blink--;
 		}
 		break;
 
 	case GREEN:
-		if (timer3_flag == 1) {
-			setTimer3(250);
+		if (count_blink <= 0) {
+			count_blink = 24;
 			HAL_GPIO_TogglePin(GPIOA, LED_GREEN_1_Pin | LED_GREEN_2_Pin);
+		}
+		else {
+			count_blink--;
 		}
 		break;
 

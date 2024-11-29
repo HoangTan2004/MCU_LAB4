@@ -10,6 +10,7 @@
 #include "main.h"
 #include "display_7seg.h"
 #include "software_timer.h"
+#include "global.h"
 
 /**
  * 	@brief:		Display number to 7 SEG led with prior buffer
@@ -26,38 +27,50 @@ void displaySegment(void){
 	switch (STATUS_7SEG) {
 		case INIT:
 			STATUS_7SEG = SEG0;
-			setTimer2(TIME_7SEG);
+			count_7SEG = 24;
 			break;
 		case SEG0:
 			setEnableSignal(SEG0);
 			displayNumber(led_buffer[SEG0]);
-			if (timer2_flag == 1) {
+			if (count_7SEG <= 0) {
 				STATUS_7SEG = SEG1;
-				setTimer2(TIME_7SEG);
+				count_7SEG = 24;
+			}
+			else {
+				count_7SEG--;
 			}
 			break;
 		case SEG1:
 			setEnableSignal(SEG1);
 			displayNumber(led_buffer[SEG1]);
-			if (timer2_flag == 1) {
+			if (count_7SEG <= 0) {
 				STATUS_7SEG = SEG2;
-				setTimer2(TIME_7SEG);
+				count_7SEG = 24;
+			}
+			else {
+				count_7SEG--;
 			}
 			break;
 		case SEG2:
 			setEnableSignal(SEG2);
 			displayNumber(led_buffer[SEG2]);
-			if (timer2_flag == 1) {
+			if (count_7SEG <= 0) {
 				STATUS_7SEG = SEG3;
-				setTimer2(TIME_7SEG);
+				count_7SEG = 24;
+			}
+			else {
+				count_7SEG--;
 			}
 			break;
 		case SEG3:
 			setEnableSignal(SEG3);
 			displayNumber(led_buffer[SEG3]);
-			if (timer2_flag == 1) {
+			if (count_7SEG <= 0) {
 				STATUS_7SEG = SEG0;
-				setTimer2(TIME_7SEG);
+				count_7SEG = 24;
+			}
+			else {
+				count_7SEG--;
 			}
 			break;
 		default:

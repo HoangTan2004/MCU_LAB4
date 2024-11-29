@@ -14,6 +14,8 @@
 #define SCH_MAX_TASKS	40
 #define NO_TASK_ID 		0
 
+extern int currentTaskIndex;
+
 void SCH_Init(void);
 void SCH_Update(void);
 void SCH_Add_Task(void (*pFunction)(), uint32_t DELAY, uint32_t PERIOD);

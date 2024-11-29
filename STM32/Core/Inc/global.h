@@ -30,6 +30,11 @@ extern int BLINKY_LED_STATUS;
 
 extern int led_buffer[];
 extern int STATUS_7SEG;
-extern int TIME_7SEG;
+
+extern int count_7SEG;
+extern int count_auto;
+extern int count_blink;
+
+extern int TIME_CYCLE;
 
 #endif /* INC_GLOBAL_H_ */

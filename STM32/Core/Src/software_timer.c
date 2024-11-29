@@ -7,7 +7,6 @@
 
 #include "software_timer.h"
 
-int TIME_CYCLE = 10;
 
 // Timer 1 is used for traffic light (MODE 1)
 int timer1_counter = 0;

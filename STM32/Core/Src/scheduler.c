@@ -5,10 +5,10 @@
  *      Author: HP
  */
 
-#include "scheduler.h"
+#include "global.h"
 
 typedef struct {
-	void (* pTask)(void);
+	void (*pTask)(void);
 	uint32_t Delay;
 	uint32_t Period;
 	uint8_t RunMe;
@@ -17,7 +17,7 @@ typedef struct {
 
 sTask SCH_tasks_G[SCH_MAX_TASKS];
 
-int numTask = 0;
+int numTask = 0;	// Number of tasks currently in the scheduler
 
 /**
  * @brief:		Initialize all task by deleting all in array
@@ -32,11 +32,14 @@ void SCH_Init(void) {
 }
 
 /**
- * @brief  		Updates the task in scheduler
- * @param  		None
- * @retval 		None
+ * @brief: 		Updates the task in scheduler
+ * @param: 		None
+ * @retval:		None
  */
 void SCH_Update(void) {
+/*
+ * @brief:	Complexity O(N)
+ */
 	unsigned char index;
 	for (index = 0; index < SCH_MAX_TASKS; index++) {
 		if (SCH_tasks_G[index].pTask) {
@@ -54,11 +57,11 @@ void SCH_Update(void) {
 }
 
 /**
- * @brief  		Add new task to the scheduler with a specified delay and period
- * @param  		- pFunction: 	Pointer to the function to be executed for the task
+ * @brief: 		Add new task to the scheduler with a specified delay and period
+ * @param: 		- pFunction: 	Pointer to the function to be executed for the task
  * 		   		- DELAY: 		Initial delay before the task runs for the first time
  * 		   		- PERIOD: 		The period at which the task should repeat
- * @retval 		None
+ * @retval:		None
  */
 void SCH_Add_Task(void(*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
 	if (numTask < SCH_MAX_TASKS) {
@@ -69,6 +72,7 @@ void SCH_Add_Task(void(*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
 			SCH_tasks_G[index].Delay = DELAY;
 			SCH_tasks_G[index].Period = PERIOD;
 			SCH_tasks_G[index].RunMe = 0;
+			SCH_tasks_G[index].TaskID = index;
 			numTask++;
 			break;
 		}
@@ -76,11 +80,14 @@ void SCH_Add_Task(void(*pFunction)(), uint32_t DELAY, uint32_t PERIOD) {
 }
 
 /**
- * @brief  		Dispatches the tasks in the scheduler
- * @param  		None
- * @retval 		None
+ * @brief: 		Dispatch the tasks in the scheduler
+ * @param: 		None
+ * @retval:		None
  */
 void SCH_Dispatch_Tasks(void) {
+/*
+ * @brief	Complexity O(N)
+ */
 	unsigned char index;
 	for (index = 0; index < SCH_MAX_TASKS; index++) {
 		if (SCH_tasks_G[index].RunMe > 0) {
@@ -92,9 +99,9 @@ void SCH_Dispatch_Tasks(void) {
 }
 
 /**
- * @brief  		Deletes a task from the scheduler by clearing data
- * @param  		ID of the task to be deleted
- * @retval 		None
+ * @brief: 		Deletes a task from the scheduler by clearing data
+ * @param: 		ID of the task to be deleted
+ * @retval:		None
  */
 void SCH_Delete_Task(uint32_t taskID) {
 	if (taskID >= SCH_MAX_TASKS || SCH_tasks_G[taskID].pTask == 0) return;
